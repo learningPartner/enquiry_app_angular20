@@ -1,0 +1,153 @@
+<div class="container-fluid py-4 parent">
+    <div class="d-flex justify-content-between align-items-center mb-3">
+        <h3 class="m-0">Enquiry Form</h3>
+    </div>
+
+    <form id="enquiryForm" class="needs-validation" novalidate>
+        <!-- Customer details -->
+        <div class="card card-section">
+            <div class="card-body">
+                <h5 class="card-title">1. Customer details</h5>
+                <div class="row g-3">
+                    <div class="col-md-6">
+                        <label for="customerName" class="form-label">Name</label>
+                        <input type="text" [(ngModel)]="newEnquieyObj.customerName" class="form-control"
+                            id="customerName" name="customerName" placeholder="John Doe" required>
+                        <div class="invalid-feedback">Please enter customer name.</div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <label for="customerEmail" class="form-label">Email</label>  
+                        <input type="email" [(ngModel)]="newEnquieyObj.customerEmail" class="form-control"
+                            id="customerEmail" name="customerEmail" placeholder="name@example.com" required>
+                        <div class="invalid-feedback">Please enter a valid email.</div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <label for="customerPhone" class="form-label">Phone</label>
+                        <div class="input-group">
+                            <span class="input-group-text">+91</span> 
+                            <input type="tel" [(ngModel)]="newEnquieyObj.customerPhone" class="form-control"
+                                id="customerPhone" name="customerPhone" placeholder="9876543210" pattern="[0-9]{10}"
+                                required>
+                        </div>
+                        <div class="form-text small-muted">10 digits only (India format). Adjust pattern if needed.
+                        </div>
+                        <div class="invalid-feedback">Please enter a 10-digit phone number.</div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+        <!-- Enquiry details -->
+        <div class="card card-section">
+            <div class="card-body">
+                <h5 class="card-title">2. Enquiry details</h5>
+                <div class="row g-3">
+                    <div class="col-md-12">
+                        <label for="message" class="form-label">Message</label> 
+                        <textarea class="form-control" [(ngModel)]="newEnquieyObj.message" id="message" name="message"
+                            rows="3" maxlength="500" placeholder="Write customer's enquiry or requirement..."
+                            required></textarea>
+                        <div class="d-flex justify-content-between mt-1">
+                            <div class="small-muted">Max 500 characters</div>
+                            <div class="char-count" id="msgCount">0 / 500</div>
+                        </div>
+                        <div class="invalid-feedback">Message cannot be empty.</div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <label for="categoryId" class="form-label">Category</label>
+                        
+                        <select class="form-select" [(ngModel)]="newEnquieyObj.categoryId" id="categoryId"
+                            name="categoryId" required>
+                            <option value="" selected disabled>Choose category</option>
+                            <option *ngFor="let item of categoryList" [value]="item.categoryId">{{item.categoryName}}
+                            </option>
+                        </select>
+                        <div class="invalid-feedback">Choose a category.</div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <label for="enquiryType" class="form-label">Enquiry type</label> 
+                        <input type="text" [(ngModel)]="newEnquieyObj.enquiryType" class="form-control" id="enquiryType"
+                            name="enquiryType" placeholder="e.g. Product inquiry / Demo request">
+                        <div class="form-text small-muted">Optional - helps routing.</div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <label for="statusId" class="form-label">Status</label> 
+                        <select class="form-select" [(ngModel)]="newEnquieyObj.statusId" id="statusId" name="statusId"
+                            required>
+                            <option value="" selected disabled>Choose status</option>
+                            <option *ngFor="let item of statusList" [value]="item.statusId">{{item.statusName}}</option>
+                        </select>
+                        <div class="invalid-feedback">Choose a status.</div>
+                    </div>
+
+                    <div class="col-md-6 d-flex align-items-end">
+                        <div class="form-check form-switch w-100">
+                          
+                            <input class="form-check-input" type="checkbox" [(ngModel)]="newEnquieyObj.isConverted"
+                                id="isConverted" name="isConverted">
+                            <label class="form-check-label" for="isConverted">Marked as converted</label>
+                            <div class="form-text small-muted">Toggle when the enquiry becomes a sale or opportunity.
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+        <!-- Dates & Follow up -->
+        <div class="card card-section">
+            <div class="card-body">
+                <h5 class="card-title">3. Dates & follow-up</h5>
+                <div class="row g-3 align-items-end">
+                    <div class="col-md-6">
+                        <label for="enquiryDate" class="form-label">Enquiry date</label> 
+                        <input type="datetime-local" [(ngModel)]="newEnquieyObj.enquiryDate" class="form-control"
+                            id="enquiryDate" name="enquiryDate">
+                        <div class="form-text small-muted">When the enquiry was received.</div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <label for="followUpDate" class="form-label">Follow-up date</label> 
+                        <input type="datetime-local" [(ngModel)]="newEnquieyObj.followUpDate" class="form-control"
+                            id="followUpDate" name="followUpDate">
+                        <div class="form-text small-muted">Next follow-up (optional). Leave empty if none.</div>
+                    </div>
+
+                    <div class="col-12">
+                        <div id="followupHint" class="alert alert-info py-2 mt-2 d-none">Tip: set follow-up within 3
+                            days for hot leads.</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Feedback & actions -->
+        <div class="card card-section">
+            <div class="card-body">
+                <h5 class="card-title">4. Feedback & notes</h5>
+                <div class="mb-3">
+                    <label for="feedback" class="form-label">Feedback / Internal notes</label> 
+                    <textarea class="form-control" [(ngModel)]="newEnquieyObj.feedback" id="feedback" name="feedback"
+                        rows="2" maxlength="1000" placeholder="Internal notes, next steps..."></textarea>
+                    <div class="form-text small-muted">Visible only to internal team.</div>
+                </div>
+
+                <div class="d-flex gap-2">
+                    <button class="btn btn-success" type="button" (click)="onSaveEnquiry()"> Save Enquiry</button>
+                    <button class="btn btn-outline-secondary" type="button" id="saveDraft">Save Draft</button>
+                    <button class="btn btn-outline-danger" type="button" id="clearBtn">Clear</button>
+                </div>
+            </div>
+        </div>
+
+    </form>
+
+    <footer class="text-muted mt-3">Built with Bootstrap 5 — sample static form for demos and prototypes.</footer>
+</div>

@@ -1,0 +1,74 @@
+<div class="container-wrapper">
+    <div class="page-header">
+        <h1>Enquiry Management</h1>
+        <p>View and manage all customer enquiries</p>
+    </div>
+
+    <div class="enquiry-grid">
+        <!-- Enquiry Card 1 -->
+        @for (item of enquiryList; track $index) {
+        <div class="enquiry-card">
+            <div class="card-header-custom">
+                <div> 
+                    <div class="status-badge status-new" style="margin-top: 8px;">{{item.statusId}}</div>
+                </div>
+            </div>
+            <div class="card-body-custom">
+                <div class="customer-info">
+                    <div class="customer-name">
+                        <i class="bi bi-person-circle"></i>
+                        {{item.customerName}}
+                    </div>
+                </div>
+
+                <div class="contact-details"> 
+                    <div class="contact-item">
+                        <i class="bi bi-telephone"></i>
+                        <span>{{item.customerPhone}}</span>
+                    </div>
+                </div>
+
+                <div class="enquiry-details">
+                    <div class="enquiry-type">{{item.enquiryType}}</div>
+                    <!-- <div class="enquiry-message">Looking for Cloud Provider</div> -->
+                </div>
+
+                <div class="feedback-section">
+                    <i class="bi bi-chat-left-text"></i>
+                    <div class="feedback-text">{{item.feedback}}</div>
+                </div>
+
+                <div class="dates-row">
+                    <div class="date-item">
+                        <span class="date-label">Enquiry Date</span>
+                        <span class="date-value">{{item.enquiryDate | date:'dd-MMM-yy'}}</span> 
+                    </div>
+                    <!-- <div class="date-item">
+                        <span class="date-label">Follow Up</span>
+                        <span class="date-value">Nov 14, 2025</span>
+                        <span style="font-size: 0.8rem; color: #94a3b8;">3:25 PM</span>
+                    </div> -->
+                </div>
+            </div>
+            <div class="card-footer-custom">
+                <div class="conversion-indicator conversion-no">
+                    <i class="bi bi-x-circle"></i>
+                    Not Converted
+                </div>
+                <div class="action-buttons">
+                    <button class="btn-action btn-view">
+                        <i class="bi bi-eye"></i>
+                        View
+                    </button>
+                    <button class="btn-action btn-edit">
+                        <i class="bi bi-pencil"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+        }
+
+
+
+    </div>
+</div>

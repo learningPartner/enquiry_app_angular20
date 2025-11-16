@@ -1,0 +1,57 @@
+ <div class="parent">
+     <div class="login-container">
+        <div class="login-card">
+            <div class="login-header">
+                <div class="login-icon">
+                    <i class="bi bi-shield-lock"></i>
+                </div>
+                <h1>Welcome Back</h1>
+                <p>Sign in to continue to your account</p>
+            </div>
+            <div class="login-body">
+                <form>
+                    <div class="form-floating">
+                        <input type="email" [(ngModel)]="loginObj.username" name="username" class="form-control" id="email" placeholder="name@example.com" required>
+                        <label for="email"><i class="bi bi-envelope me-2"></i>Email address</label>
+                    </div>
+                    <div class="form-floating">
+                        <input type="password" [(ngModel)]="loginObj.pwd" name="pwd" class="form-control" id="password" placeholder="Password" required>
+                        <label for="password"><i class="bi bi-lock me-2"></i>Password</label>
+                    </div>
+                    <div class="d-flex justify-content-between align-items-center mb-3">
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" id="remember">
+                            <label class="form-check-label" for="remember">
+                                Remember me
+                            </label>
+                        </div>
+                        <a href="#" class="forgot-password">Forgot password?</a>
+                    </div>
+                    <button type="submit" class="btn btn-login" (click)="onLogin()">
+                        <span style="position: relative;">Sign In</span>
+                    </button>
+                </form>
+
+                <div class="divider">
+                    <span>OR CONTINUE WITH</span>
+                </div>
+
+                <div class="social-login">
+                    <button class="social-btn">
+                        <i class="bi bi-google"></i>
+                        Google
+                    </button>
+                    <button class="social-btn">
+                        <i class="bi bi-github"></i>
+                        GitHub
+                    </button>
+                </div>
+
+                <div class="signup-link">
+                    Don't have an account? <a href="#">Sign up</a>
+                </div>
+            </div>
+        </div>
+    </div>
+ </div>
+
