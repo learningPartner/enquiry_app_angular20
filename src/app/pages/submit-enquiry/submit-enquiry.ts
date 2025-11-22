@@ -1,59 +1,58 @@
-import { Component, inject, OnInit } from '@angular/core';
-import { MasterService } from '../../services/master-service';
-import { FormsModule } from '@angular/forms';
-import { NgFor } from '@angular/common';
-
+import { Component, inject, OnDestroy, OnInit } from '@angular/core';
+import { MasterService } from '../../services/master-service'; 
+import { EnquiryModel } from '../../model/class/Enquiry.Model';
+import { ICategory, IStatus } from '../../model/interface/Master.model';
+import { Observable, Subscription } from 'rxjs';
+import { CommonImports } from '../../Global.constant';
 
 @Component({
   selector: 'app-submit-enquiry',
-  imports: [FormsModule,NgFor],
+  imports: [CommonImports],
   templateUrl: './submit-enquiry.html',
   styleUrl: './submit-enquiry.css'
 })
-export class SubmitEnquiry implements OnInit {
+export class SubmitEnquiry implements OnInit, OnDestroy {
 
   masterService = inject(MasterService);
-  statusList: any[] = [];
-  categoryList: any[] = [];
+  //statusList: IStatus[] = [];
+  //categoryList: ICategory[] = [];
 
-  newEnquieyObj: any = {
-    "enquiryId": 0,
-    "customerName": "",
-    "customerEmail": "",
-    "customerPhone": "",
-    "message": "",
-    "categoryId": 0,
-    "statusId": 0,
-    "enquiryType": "",
-    "isConverted": false,
-    "enquiryDate": "",
-    "followUpDate": new Date(),
-    "feedback": ""
+  $statsuList: Observable<IStatus[]> = new Observable<IStatus[]>;
+  $categoryList: Observable<ICategory[]> = new Observable<ICategory[]>;
+
+  newEnquieyObj: EnquiryModel =  new EnquiryModel();
+
+  subscription!: Subscription;
+
+  constructor() {
+    this.$categoryList = this.masterService.getAllCategory();
+    this.$statsuList = this.masterService.getAllStatus();
   }
 
   ngOnInit(): void {
-    this.getStatus();
-    this.getCategiry()
+   // this.getStatus();
+    //this.getCategiry()
   }
 
-  getStatus() {
-    this.masterService.getAllStatus().subscribe({
-      next: (result: any) => {
-        this.statusList = result.data;
+  // getStatus() {
+  //   this.masterService.getAllStatus().subscribe({
+  //     next: (result: any) => {
+  //       this.statusList = result.data;
+  //     }
+  //   })
+  // }
 
-      }
-    })
-  }
-  getCategiry() {
-    this.masterService.getAllCategory().subscribe({
-      next: (result: any) => {
-        this.categoryList = result.data;
-      }
-    })
-  }
+  // getCategiry() {
+  //   this.masterService.getAllCategory().subscribe({
+  //     next: (result: any) => {
+  //       this.categoryList = result.data;
+  //     }
+  //   })
+  // }
 
   onSaveEnquiry() {
-    this.masterService.saveNewEnquiry(this.newEnquieyObj).subscribe({
+    this.newEnquieyObj.statusId = '1';
+    this.subscription = this.masterService.saveNewEnquiry(this.newEnquieyObj).subscribe({
       next:(result:any)=>{
         alert("Enquiry Submited Success")
       },
@@ -61,5 +60,10 @@ export class SubmitEnquiry implements OnInit {
         alert("Errro From API")
       }
     })
+
+  }
+
+  ngOnDestroy(): void {
+    this.subscription.unsubscribe();
   }
 }
